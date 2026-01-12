@@ -1,0 +1,27 @@
+from __future__ import annotations
+from typing import List, Tuple
+
+
+def dt_to_pd(dt: List[int]) -> List[Tuple[int, int, int, int]]:
+    m = 2 * len(dt)  # max traversal label
+    def succ(k: int) -> int:
+        return 1 if k == m else k + 1
+    pd=[]
+    for i, even_signed in enumerate(dt):
+        o = 2 * i + 1
+        e = abs(even_signed)
+        sign = 1 if even_signed > 0 else -1
+        a = o
+        b = succ(o)
+        c = e
+        d = succ(e)
+        if sign > 0:
+            pd.append((a, d, b, c))
+        else:
+            pd.append((a, c, b, d))
+
+    return pd
+ # Example: trefoil under this convention
+dt = [4, 6, 2]
+print("DT:", dt)
+print("PD:", dt_to_pd(dt))
